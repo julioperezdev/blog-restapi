@@ -1,0 +1,14 @@
+services:
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    user: '0:0'
+    container_name: blog-restapi-db
+    ports:
+      - 1433:1433
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Password01.
+      SSQL_PID: Express
+    volumes:
+      - ~/developer/databases/blog-restapi/backup:/var/opt/mssql
