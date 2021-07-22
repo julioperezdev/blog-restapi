@@ -7,7 +7,7 @@ import javax.persistence.Id;
 public class ImageContent {
 
     @Id
-    private Long id;
+    private Long idPost;
 
     private Long idTypeVisualContent;
 
@@ -15,8 +15,8 @@ public class ImageContent {
 
     private String publicId;
 
-    public ImageContent(Long id, Long idTypeVisualContent, String imageUrl, String publicId) {
-        this.id = id;
+    public ImageContent(Long idPost, Long idTypeVisualContent, String imageUrl, String publicId) {
+        this.idPost = idPost;
         this.idTypeVisualContent = idTypeVisualContent;
         this.imageUrl = imageUrl;
         this.publicId = publicId;
@@ -32,11 +32,11 @@ public class ImageContent {
     }
 
     public Long getId() {
-        return id;
+        return idPost;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long idPost) {
+        this.idPost = idPost;
     }
 
     public Long getIdTypeVisualContent() {

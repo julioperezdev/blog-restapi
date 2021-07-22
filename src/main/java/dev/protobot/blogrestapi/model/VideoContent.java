@@ -7,14 +7,14 @@ import javax.persistence.Id;
 public class VideoContent {
 
     @Id
-    private Long id;
+    private Long idPost;
 
     private Long idTypeVisualContent;
 
     private String videoUrl;
 
-    public VideoContent(Long id, Long idTypeVisualContent, String videoUrl) {
-        this.id = id;
+    public VideoContent(Long idPost, Long idTypeVisualContent, String videoUrl) {
+        this.idPost = idPost;
         this.idTypeVisualContent = idTypeVisualContent;
         this.videoUrl = videoUrl;
     }
@@ -28,11 +28,11 @@ public class VideoContent {
     }
 
     public Long getId() {
-        return id;
+        return idPost;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long idPost) {
+        this.idPost = idPost;
     }
 
     public Long getIdTypeVisualContent() {

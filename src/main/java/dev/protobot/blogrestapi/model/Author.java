@@ -17,23 +17,19 @@ public class Author {
 
     private String publicId;
 
-    private boolean certificate;
-
-    public Author(Long id, String email, String fullName, String imageUrl, String publicId, boolean certificate) {
+    public Author(Long id, String email, String fullName, String imageUrl, String publicId) {
         this.id = id;
         this.email = email;
         this.fullName = fullName;
         this.imageUrl = imageUrl;
         this.publicId = publicId;
-        this.certificate = certificate;
     }
 
-    public Author(String email, String fullName, String imageUrl, String publicId, boolean certificate) {
+    public Author(String email, String fullName, String imageUrl, String publicId) {
         this.email = email;
         this.fullName = fullName;
         this.imageUrl = imageUrl;
         this.publicId = publicId;
-        this.certificate = certificate;
     }
 
     public Author() {
@@ -78,13 +74,6 @@ public class Author {
     public void setPublicId(String publicId) {
         this.publicId = publicId;
     }
-
-    public boolean isCertificate() {
-        return certificate;
-    }
-
-    public void setCertificate(boolean certificate) {
-        this.certificate = certificate;
-    }
+    
 }
 

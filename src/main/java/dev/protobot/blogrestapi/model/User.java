@@ -11,9 +11,6 @@ public class User {
 
     private String email;
 
-    //TODO: array with Likes of post
-
-
     public User(Long id, String email) {
         this.id = id;
         this.email = email;
