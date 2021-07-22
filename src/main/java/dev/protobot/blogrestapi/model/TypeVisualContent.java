@@ -4,23 +4,23 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Category {
+public class TypeVisualContent {
 
     @Id
     private Long id;
 
     private String name;
 
-    public Category(Long id, String name) {
+    public TypeVisualContent(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Category(String name) {
+    public TypeVisualContent(String name) {
         this.name = name;
     }
 
-    public Category() {
+    public TypeVisualContent() {
     }
 
     public Long getId() {
