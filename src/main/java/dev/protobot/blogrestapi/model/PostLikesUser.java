@@ -1,16 +1,21 @@
 package dev.protobot.blogrestapi.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "PostLikesUser")
 public class PostLikesUser {
 
     @Id
     private Long id;
 
+    @Column(name = "idPost")
     private Long idPost;
 
+    @Column(name = "idUser")
     private Long idUser;
 
     public PostLikesUser(Long id, Long idPost, Long idUser) {

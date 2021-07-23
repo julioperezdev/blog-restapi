@@ -1,10 +1,13 @@
 package dev.protobot.blogrestapi.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.Instant;
 
 @Entity
+@Table(name = "Post")
 public class Post {
 
     @Id
@@ -14,12 +17,15 @@ public class Post {
 
     private String description;
 
+    @Column(name = "idCategory")
     private Long idCategory;
 
+    @Column(name = "idTypeVisualContent")
     private Long idTypeVisualContent;
 
     private Instant dates;
 
+    @Column(name = "idAuthor")
     private Long idAuthor;
 
     public Post(Long id, String title, String description, Long idCategory, Long idTypeVisualContent, Instant dates, Long idAuthor) {

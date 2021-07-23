@@ -1,9 +1,12 @@
 package dev.protobot.blogrestapi.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "Author")
 public class Author {
 
     @Id
@@ -11,10 +14,13 @@ public class Author {
 
     private String email;
 
+    @Column(name = "name")
     private String fullName;
 
+    @Column(name = "imageUrl")
     private String imageUrl;
 
+    @Column(name = "publicId")
     private String publicId;
 
     public Author(Long id, String email, String fullName, String imageUrl, String publicId) {

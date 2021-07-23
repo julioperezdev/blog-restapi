@@ -1,16 +1,22 @@
 package dev.protobot.blogrestapi.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "VideoContent")
 public class VideoContent {
 
     @Id
+    @Column(name = "idPost")
     private Long idPost;
 
+    @Column(name = "idTypeVisualContent")
     private Long idTypeVisualContent;
 
+    @Column(name = "videoUrl")
     private String videoUrl;
 
     public VideoContent(Long idPost, Long idTypeVisualContent, String videoUrl) {
