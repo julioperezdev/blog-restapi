@@ -27,7 +27,7 @@ public class CategoryServiceImplementation implements CategoryService {
     }
 
     @Override
-    public void deleteCategoryById(Long id) {
-
+    public String deleteCategoryById(Long id) {
+        return null;
     }
 }

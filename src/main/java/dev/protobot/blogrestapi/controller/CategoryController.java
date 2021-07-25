@@ -38,4 +38,10 @@ public class CategoryController {
         Category categoryCreated = categoryService.saveCategory(category);
         return new RestResponse<>(HttpStatus.CREATED, categoryCreated);
     }
+
+    @DeleteMapping("/delete/byid/{id}")
+    public RestResponse<String> deleteBlogById(@PathVariable Long id) {
+        String responseService = categoryService.deleteCategoryById(id);
+        return new RestResponse<>(HttpStatus.OK, responseService);
+    }
 }
