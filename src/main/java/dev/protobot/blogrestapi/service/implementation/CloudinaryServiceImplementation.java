@@ -2,7 +2,6 @@ package dev.protobot.blogrestapi.service.implementation;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import dev.protobot.blogrestapi.configuration.CloudinaryConfig;
 import dev.protobot.blogrestapi.service.CloudinaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

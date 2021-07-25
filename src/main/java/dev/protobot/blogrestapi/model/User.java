@@ -5,24 +5,24 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Category")
-public class Category {
+@Table(name = "Users")
+public class User {
 
     @Id
     private Long id;
 
-    private String name;
+    private String email;
 
-    public Category(Long id, String name) {
+    public User(Long id, String email) {
         this.id = id;
-        this.name = name;
+        this.email = email;
     }
 
-    public Category(String name) {
-        this.name = name;
+    public User(String email) {
+        this.email = email;
     }
 
-    public Category() {
+    public User() {
     }
 
     public Long getId() {
@@ -33,11 +33,11 @@ public class Category {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
