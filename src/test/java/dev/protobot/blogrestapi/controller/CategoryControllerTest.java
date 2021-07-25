@@ -23,6 +23,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -125,6 +126,26 @@ class CategoryControllerTest {
             then(categoryServiceImplementation).should().saveCategory(any(Category.class));
 //            mockMvc.perform(post("/api/v1/blog/save"))
 //                    .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        }
+    }
+
+    @Nested
+    public class itShouldDeleteCategoryByIdCase{
+
+        @Test
+        void itShouldDeleteByIdHappyCase() throws Exception {
+            //given
+            Long id = 1L;
+            String responseService = "OK";
+            given(categoryServiceImplementation.deleteCategoryById(anyLong())).willReturn(responseService);
+
+            //when
+            controller.deleteBlogById(id);
+
+            //then
+            then(categoryServiceImplementation).should().deleteCategoryById(id);
+            mockMvc.perform(delete("/api/v1/category/delete/byid/"+id))
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON));
         }
     }
 
