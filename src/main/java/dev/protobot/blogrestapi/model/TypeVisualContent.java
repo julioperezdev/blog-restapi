@@ -5,24 +5,24 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Category")
-public class Category {
+@Table(name = "TypeVisualContent")
+public class TypeVisualContent {
 
     @Id
     private Long id;
 
     private String name;
 
-    public Category(Long id, String name) {
+    public TypeVisualContent(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Category(String name) {
+    public TypeVisualContent(String name) {
         this.name = name;
     }
 
-    public Category() {
+    public TypeVisualContent() {
     }
 
     public Long getId() {
