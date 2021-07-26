@@ -3,7 +3,6 @@ package dev.protobot.blogrestapi.controller;
 import dev.protobot.blogrestapi.dto.response.RestResponse;
 import dev.protobot.blogrestapi.model.TypeVisualContent;
 import dev.protobot.blogrestapi.service.TypeVisualContentService;
-import dev.protobot.blogrestapi.service.implementation.TypeVisualContentServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
