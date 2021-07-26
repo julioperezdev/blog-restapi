@@ -13,6 +13,6 @@ public interface CategoryService {
 
     Category saveCategory(Category category);
 
-    void deleteCategoryById(Long id);
+    String deleteCategoryById(Long id);
 
 }
