@@ -17,6 +17,10 @@ import java.util.Optional;
 public class CategoryServiceImplementation implements CategoryService {
 
 
+    private static String DELETE_DOESNT_OK = "DOESNT DELETED";
+
+    private static String DELETE_SUCCESSFULLY_PROCESS = "SUCCESSFULLY DELETED";
+
     private final CategoryRepository categoryRepository;
 
     private final CheckIfNullOrEmptyString checkIfNullOrEmptyString;
@@ -46,12 +50,15 @@ public class CategoryServiceImplementation implements CategoryService {
 
     @Override
     public Optional<Category> getCategoryById(Long id) {
+        checkIfNullOrZeroLong.check(id);
         Optional<Category> categoryById = categoryRepository.getCategoryById(id);
         return categoryById;
     }
 
     @Override
     public Category saveCategory(Category category) {
+        checkIfNullOrEmptyString.check(category.getName());
+        checkIfStringHaveNumber.check(category.getName());
         String lowerCaseCategoryName = convertStringToLowerCase.convert(category.getName());
         Category categorySaved = categoryRepository.saveCategory(lowerCaseCategoryName);
         return categorySaved;
@@ -59,6 +66,10 @@ public class CategoryServiceImplementation implements CategoryService {
 
     @Override
     public String deleteCategoryById(Long id) {
-        return null;
+        checkIfNullOrZeroLong.check(id);
+        String resultWithEmptyString = categoryRepository.deleteCategoryById(id);
+        if(!resultWithEmptyString.isEmpty())
+            return DELETE_DOESNT_OK;
+        return DELETE_SUCCESSFULLY_PROCESS;
     }
 }

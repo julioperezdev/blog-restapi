@@ -1,5 +1,6 @@
 package dev.protobot.blogrestapi.service.implementation;
 
+import dev.protobot.blogrestapi.exceptions.helper.shared.HelperCheckIfNullOrZeroLongException;
 import dev.protobot.blogrestapi.helper.shared.CheckIfNullOrEmptyString;
 import dev.protobot.blogrestapi.helper.shared.CheckIfNullOrZeroLong;
 import dev.protobot.blogrestapi.helper.shared.CheckIfStringHaveNumber;
@@ -23,8 +24,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CategoryServiceImplementationTest {
@@ -91,18 +91,16 @@ class CategoryServiceImplementationTest {
         void itShouldGetCategoryByIdHappyCase() {
             //given
             Category categoryOne = new Category(1L, "it");
-            Category categoryTwo = new Category(2L, "wallets");
-            List<Category> list = new ArrayList<>();
-            list.add(categoryOne);
-            list.add(categoryTwo);
             given(categoryRepository.getCategoryById(anyLong())).willReturn(Optional.of(categoryOne));
 
             //when
-            Optional<Category> result = service.getCategoryById(1L);
+            Optional<Category> result = service.getCategoryById(categoryOne.getId());
 
             //then
             then(categoryRepository).should().getCategoryById(anyLong());
             then(categoryRepository).shouldHaveNoMoreInteractions();
+            then(checkIfNullOrZeroLong).should().check(anyLong());
+            then(checkIfNullOrZeroLong).shouldHaveNoMoreInteractions();
             assertTrue(result.isPresent());
             assertEquals(categoryOne, result.get());
         }
@@ -111,11 +109,11 @@ class CategoryServiceImplementationTest {
 
     @Nested
     public class saveCategoryCases{
+
         @Test
-        @Disabled
         void itShouldSaveCategoryHappyCase() {
             //given
-            Category categoryBefore = new Category("ai");
+            Category categoryBefore = new Category("Ai");
             Category categoryAfter = new Category("ai");
             given(convertStringToLowerCase.convert(anyString()))
                     .willReturn(categoryAfter.getName());
@@ -123,10 +121,15 @@ class CategoryServiceImplementationTest {
                     .willReturn(new Category(1L, categoryAfter.getName()));
 
             //when
-            Category categoryCreated = categoryRepository.saveCategory(categoryBefore.getName());
+            Category categoryCreated = service.saveCategory(categoryBefore);
 
             //then
+            then(checkIfNullOrEmptyString).should().check(anyString());
+            then(checkIfNullOrEmptyString).shouldHaveNoMoreInteractions();
+            then(checkIfStringHaveNumber).should().check(anyString());
+            then(checkIfStringHaveNumber).shouldHaveNoMoreInteractions();
             then(convertStringToLowerCase).should().convert(categoryBefore.getName());
+            then(convertStringToLowerCase).shouldHaveNoMoreInteractions();
             then(categoryRepository).should().saveCategory(categoryAfter.getName());
             //assertNotNull(categoryCreated);
         }
@@ -135,6 +138,40 @@ class CategoryServiceImplementationTest {
 
     @Nested
     public class deleteCategoryByIdCases{
+
+        @Test
+        void itShouldGetCategoryByIdHappyCase() {
+            //given
+            Category categoryOne = new Category(1L, "it");
+            given(categoryRepository.deleteCategoryById(anyLong())).willReturn(categoryOne.getName());
+
+            //when
+            String result = service.deleteCategoryById(categoryOne.getId());
+
+            //then
+            then(categoryRepository).should().deleteCategoryById(anyLong());
+            then(categoryRepository).shouldHaveNoMoreInteractions();
+            then(checkIfNullOrZeroLong).should().check(anyLong());
+            then(checkIfNullOrZeroLong).shouldHaveNoMoreInteractions();
+            assertEquals("DOESNT DELETED", result);
+        }
+
+        @Test
+        void itShouldGetCategoryByIdWhenDoesntDeleted() {
+            //given
+            Category categoryDeleted = new Category(1L, "");
+            given(categoryRepository.deleteCategoryById(anyLong())).willReturn(categoryDeleted.getName());
+
+            //when
+            String result = service.deleteCategoryById(categoryDeleted.getId());
+
+            //then
+            then(categoryRepository).should().deleteCategoryById(anyLong());
+            then(categoryRepository).shouldHaveNoMoreInteractions();
+            then(checkIfNullOrZeroLong).should().check(anyLong());
+            then(checkIfNullOrZeroLong).shouldHaveNoMoreInteractions();
+            assertEquals("SUCCESSFULLY DELETED", result);
+        }
 
     }
 
