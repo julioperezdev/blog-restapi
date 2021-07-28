@@ -18,7 +18,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Query(value = "SELECT * FROM Category WHERE id = :id ", nativeQuery = true)
     Optional<Category> getCategoryById( @Param("id") Long id);
 
-    @Query(value = "INSERT INTO Category VALUES(:name) ", nativeQuery = true)
+    @Query(value = "EXEC saveCategory @Name = :name ", nativeQuery = true)
     Category saveCategory(@Param("name") String name);
 
     @Query(value = "DELETE FROM Category WHERE id = :id ", nativeQuery = true)

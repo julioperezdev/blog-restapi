@@ -8,7 +8,7 @@ public class HelperStringCanNotHaveAnyNumberException extends NumberFormatExcept
     Logger logger = LoggerFactory.getLogger(HelperStringCanNotHaveAnyNumberException.class);
 
     public HelperStringCanNotHaveAnyNumberException(String particularString) {
-        logger.warn("Can not use a Number in this String :" + particularString);
+        logger.error("Can not use a Number in this String :" + particularString);
         falseResult();
     }
 
