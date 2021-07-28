@@ -92,13 +92,23 @@ class TypeVisualContentServiceImplementationTest {
         @Test
         void itShouldSaveTypeVisualContentHappyCase() {
             //given
-            TypeVisualContent typeVisualContentBeforeToSave = new TypeVisualContent("image");
-            TypeVisualContent typeVisualContentAfterToSave = new TypeVisualContent(1l,"image");
-            given(typeVisualContentRepository.saveTypeVisualContent(anyString())).willReturn(any(TypeVisualContent.class));
+            TypeVisualContent typeVisualContentBeforeToSave = new TypeVisualContent("iMAge");
+            TypeVisualContent typeVisualContentAfterToSave = new TypeVisualContent(2L,"image");
+            given(convertStringToLowerCase.convert(anyString())).willReturn(typeVisualContentAfterToSave.getName());
+            given(typeVisualContentRepository.saveTypeVisualContent(anyString()))
+                    .willReturn(new TypeVisualContent(
+                            typeVisualContentAfterToSave.getId(),
+                            typeVisualContentAfterToSave.getName()));
             //when
-            service.saveTypeVisualContent(new TypeVisualContent());
+            service.saveTypeVisualContent(typeVisualContentBeforeToSave);
             //then
-            then(typeVisualContentRepository).should().saveTypeVisualContent(anyString());
+            then(checkIfNullOrEmptyString).should().check(anyString());
+            then(checkIfNullOrEmptyString).shouldHaveNoMoreInteractions();
+            then(checkIfStringHaveNumber).should().check(anyString());
+            then(checkIfStringHaveNumber).shouldHaveNoMoreInteractions();
+            then(convertStringToLowerCase).should().convert(typeVisualContentBeforeToSave.getName());
+            then(convertStringToLowerCase).shouldHaveNoMoreInteractions();
+            then(typeVisualContentRepository).should().saveTypeVisualContent(typeVisualContentAfterToSave.getName());
             then(typeVisualContentRepository).shouldHaveNoMoreInteractions();
         }
     }
