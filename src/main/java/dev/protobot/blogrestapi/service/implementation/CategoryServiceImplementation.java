@@ -1,5 +1,6 @@
 package dev.protobot.blogrestapi.service.implementation;
 
+import dev.protobot.blogrestapi.exceptions.service.category.CategoryDoesntExistInDatabaseException;
 import dev.protobot.blogrestapi.helper.shared.CheckIfNullOrEmptyString;
 import dev.protobot.blogrestapi.helper.shared.CheckIfNullOrZeroLong;
 import dev.protobot.blogrestapi.helper.shared.CheckIfStringHaveNumber;
@@ -20,6 +21,8 @@ public class CategoryServiceImplementation implements CategoryService {
     private static String DELETE_DOESNT_OK = "DOESNT DELETED";
 
     private static String DELETE_SUCCESSFULLY_PROCESS = "SUCCESSFULLY DELETED";
+
+    private static String SAVED_DOESNT_COMPLETE = "DOESNT SAVE CATEGORY";
 
     private final CategoryRepository categoryRepository;
 
@@ -52,6 +55,8 @@ public class CategoryServiceImplementation implements CategoryService {
     public Optional<Category> getCategoryById(Long id) {
         checkIfNullOrZeroLong.check(id);
         Optional<Category> categoryById = categoryRepository.getCategoryById(id);
+        if(!categoryById.isPresent())
+            throw new CategoryDoesntExistInDatabaseException();
         return categoryById;
     }
 
@@ -61,6 +66,8 @@ public class CategoryServiceImplementation implements CategoryService {
         checkIfStringHaveNumber.check(category.getName());
         String lowerCaseCategoryName = convertStringToLowerCase.convert(category.getName());
         Category categorySaved = categoryRepository.saveCategory(lowerCaseCategoryName);
+        if(categorySaved.equals(""))
+           throw new CategoryDoesntExistInDatabaseException();
         return categorySaved;
     }
 
