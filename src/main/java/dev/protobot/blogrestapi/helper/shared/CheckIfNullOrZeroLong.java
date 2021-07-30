@@ -20,6 +20,14 @@ public class CheckIfNullOrZeroLong {
 
     }
 
+    public void checkNotNull(Long longNumber){
+        logger.info("Checking if Null or Zero this " + longNumber);
+        if(!isZeroOrNull(longNumber))
+            throw new HelperCheckIfNullOrZeroLongException();
+    }
+
+
+
     private boolean isZeroOrNull(Long longNumber) {
         return !(longNumber != null && !longNumber.equals(0L));
     }

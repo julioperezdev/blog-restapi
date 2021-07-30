@@ -10,6 +10,7 @@ import dev.protobot.blogrestapi.repository.CategoryRepository;
 import dev.protobot.blogrestapi.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -55,28 +56,33 @@ public class CategoryServiceImplementation implements CategoryService {
     public Optional<Category> getCategoryById(Long id) {
         checkIfNullOrZeroLong.check(id);
         Optional<Category> categoryById = categoryRepository.getCategoryById(id);
-        if(!categoryById.isPresent())
+        if(!categoryById.isPresent()){
             throw new CategoryDoesntExistInDatabaseException();
+        }
         return categoryById;
     }
 
     @Override
+    @Transactional
     public Category saveCategory(Category category) {
         checkIfNullOrEmptyString.check(category.getName());
         checkIfStringHaveNumber.check(category.getName());
         String lowerCaseCategoryName = convertStringToLowerCase.convert(category.getName());
         Category categorySaved = categoryRepository.saveCategory(lowerCaseCategoryName);
-        if(categorySaved.equals(""))
-           throw new CategoryDoesntExistInDatabaseException();
+        if(categorySaved.equals("") || categorySaved.equals(null)){
+            throw new CategoryDoesntExistInDatabaseException();
+        }
         return categorySaved;
     }
 
     @Override
+    @Transactional
     public String deleteCategoryById(Long id) {
         checkIfNullOrZeroLong.check(id);
         String resultWithEmptyString = categoryRepository.deleteCategoryById(id);
-        if(!resultWithEmptyString.isEmpty())
+        if(resultWithEmptyString != null){
             return DELETE_DOESNT_OK;
+        }
         return DELETE_SUCCESSFULLY_PROCESS;
     }
 }

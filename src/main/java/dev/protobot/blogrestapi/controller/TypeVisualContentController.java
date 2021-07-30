@@ -36,7 +36,7 @@ public class TypeVisualContentController {
     }
 
     @PostMapping("/save")
-    public RestResponse<TypeVisualContent> saveTypeVisualContent(TypeVisualContent typeVisualContent) {
+    public RestResponse<TypeVisualContent> saveTypeVisualContent(@RequestBody TypeVisualContent typeVisualContent) {
         TypeVisualContent typeVisualContentCreated = typeVisualContentService.saveTypeVisualContent(typeVisualContent);
         return new RestResponse<>(HttpStatus.CREATED, typeVisualContentCreated);
     }

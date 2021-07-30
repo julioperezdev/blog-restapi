@@ -38,6 +38,17 @@ public class Author {
         this.publicId = publicId;
     }
 
+    public Author(String email, String fullName) {
+        this.email = email;
+        this.fullName = fullName;
+    }
+
+    public Author(Long id, String email, String fullName) {
+        this.id = id;
+        this.email = email;
+        this.fullName = fullName;
+    }
+
     public Author() {
     }
 
