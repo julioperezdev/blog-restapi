@@ -45,8 +45,9 @@ public class TypeVisualContentServiceImplementation implements TypeVisualContent
     public Optional<TypeVisualContent> getTypeVisualContentById(Long id) {
         checkIfNullOrZeroLong.check(id);
         Optional<TypeVisualContent> typeVisualContentId = typeVisualContentRepository.getTypeVisualContentById(id);
-        if(!typeVisualContentId.isPresent())
+        if(!typeVisualContentId.isPresent()){
             System.out.println("NO EXISTE");
+        }
         return typeVisualContentId;
     }
 
@@ -56,8 +57,9 @@ public class TypeVisualContentServiceImplementation implements TypeVisualContent
         checkIfStringHaveNumber.check(typeVisualContent.getName());
         String stringConverted = convertStringToLowerCase.convert(typeVisualContent.getName());
         TypeVisualContent typeVisualContentSaved = typeVisualContentRepository.saveTypeVisualContent(stringConverted);
-        if(typeVisualContentSaved.equals(""))
+        if(typeVisualContentSaved.equals("")){
             System.out.println("NO SE GUARDOO");
+        }
         return typeVisualContentSaved;
     }
 
@@ -65,8 +67,9 @@ public class TypeVisualContentServiceImplementation implements TypeVisualContent
     public String deleteTypeVisualContentById(Long id) {
         checkIfNullOrZeroLong.check(id);
         String responseWithAStringThatShouldNotExist = typeVisualContentRepository.deleteTypeVisualContentById(id);
-        if(!responseWithAStringThatShouldNotExist.isEmpty())
+        if(!responseWithAStringThatShouldNotExist.isEmpty()){
             System.out.println("NO SE BORRO");
+        }
         return "BORRADO";
     }
 }
