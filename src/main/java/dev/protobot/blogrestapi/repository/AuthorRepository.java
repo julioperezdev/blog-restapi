@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface AuthorRepository extends JpaRepository<Author, Long> {
 
 
-    @Query(value = "SELECT id, name, email FROM Author ", nativeQuery = true)
+    @Query(value = "SELECT * FROM Author; ", nativeQuery = true)
     List<Author> getAllAuthors();
 
     @Query(value = "SELECT * FROM Author WHERE id = :id ", nativeQuery = true)

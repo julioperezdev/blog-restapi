@@ -17,10 +17,10 @@ public class Author {
     @Column(name = "name")
     private String fullName;
 
-    @Column(name = "imageUrl")
+    @Column(name = "image_url")
     private String imageUrl;
 
-    @Column(name = "publicId")
+    @Column(name = "public_id")
     private String publicId;
 
     public Author(Long id, String email, String fullName, String imageUrl, String publicId) {
