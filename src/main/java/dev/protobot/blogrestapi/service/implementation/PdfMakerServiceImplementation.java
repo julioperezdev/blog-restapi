@@ -126,11 +126,13 @@ public class PdfMakerServiceImplementation {
         document.addPage( blankPage );
 
         //Path path = Paths.get(ClassLoader.getSystemResource("Protobot2.png").toURI());
-        File file = new File("Protobot2.png");
-        PDPageContentStream contentStream = new PDPageContentStream(document, blankPage);
+        //File file = new File("Protobot2.png");
+        //PDPageContentStream contentStream = new PDPageContentStream(document, blankPage);
         PDImageXObject image = PDImageXObject.createFromFile("Protobot2.png", document);
-        contentStream.drawImage(image, 0, 0);
-        contentStream.close();
+        image.setHeight(300);
+        image.setWidth(300);
+        //contentStream.drawImage(image, 0, 0);
+        //contentStream.close();
 
         PDPageContentStream content = new PDPageContentStream(document, blankPage);
 
@@ -139,20 +141,53 @@ public class PdfMakerServiceImplementation {
         content.newLineAtOffset(250, 750);
         content.showText("Registration Form");
         content.endText();
+        content.drawImage(image, 0,0);
 
         content.close();
 
 
         // Save the newly created document
-        document.save("7BlankPage.pdf");
-
-
+        document.save("8BlankPage.pdf");
 
         // finally make sure that the document is properly
         document.close();
     }
 
+    public void createPdfWithHorizantalImageAndText() throws IOException, URISyntaxException {
+        // Create a new empty document
+        PDDocument document = new PDDocument();
+
+        // Create a new blank page and add it to the document
+        PDPage blankPage = new PDPage();
+        document.addPage( blankPage );
+        blankPage.setRotation(90);
+
+        PDImageXObject image = PDImageXObject.createFromFile("Protobot2.png", document);
+        image.setHeight(300);
+        image.setWidth(300);
 
 
+        PDPageContentStream content = new PDPageContentStream(document, blankPage);
 
+        content.beginText();
+        content.setFont(PDType1Font.HELVETICA,26);
+        content.newLineAtOffset(250, 750);
+        content.showText("Registration Form");
+        content.newLine();
+        //content.newLineAtOffset(250, 750);
+        content.showText("Registration For2");
+
+        content.endText();
+
+
+        content.drawImage(image, 0,0);
+
+        content.close();
+
+        // Save the newly created document
+        document.save("10BlankPage.pdf");
+
+        // finally make sure that the document is properly
+        document.close();
+    }
 }

@@ -40,4 +40,9 @@ class PdfMakerServiceImplementationTest {
     void createPageWithImageAndText() throws IOException, URISyntaxException {
         service.createPdfWithImageAndText();
     }
+
+    @Test
+    void createPageWithHorizontalImageAndText() throws IOException, URISyntaxException {
+        service.createPdfWithHorizantalImageAndText();
+    }
 }
