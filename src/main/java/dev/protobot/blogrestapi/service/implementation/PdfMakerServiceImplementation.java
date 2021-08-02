@@ -3,10 +3,15 @@ package dev.protobot.blogrestapi.service.implementation;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.documentinterchange.taggedpdf.PDLayoutAttributeObject;
+import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.color.PDGamma;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.apache.pdfbox.util.Matrix;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -161,31 +166,103 @@ public class PdfMakerServiceImplementation {
         PDPage blankPage = new PDPage();
         document.addPage( blankPage );
         blankPage.setRotation(90);
+        float height = blankPage.getMediaBox().getHeight();
+        float width = blankPage.getMediaBox().getWidth();
+        System.out.println(height);
+        System.out.println(width);
 
         PDImageXObject image = PDImageXObject.createFromFile("Protobot2.png", document);
-        image.setHeight(300);
-        image.setWidth(300);
+        image.setHeight(100);
+        image.setWidth(100);
 
 
         PDPageContentStream content = new PDPageContentStream(document, blankPage);
 
+        content.transform(Matrix.getRotateInstance(Math.toRadians(90),0,0));
         content.beginText();
         content.setFont(PDType1Font.HELVETICA,26);
-        content.newLineAtOffset(250, 750);
+        content.newLineAtOffset(100, -30);
         content.showText("Registration Form");
         content.newLine();
-        //content.newLineAtOffset(250, 750);
+        content.newLineAtOffset(100, -50);
         content.showText("Registration For2");
+        content.newLine();
+        content.newLineAtOffset(0, -50);
+        content.showText("Registration For3");
 
         content.endText();
 
 
-        content.drawImage(image, 0,0);
+        content.drawImage(image, width/2,-600);
 
         content.close();
 
         // Save the newly created document
-        document.save("10BlankPage.pdf");
+        document.save("12BlankPage.pdf");
+
+        // finally make sure that the document is properly
+        document.close();
+    }
+
+    public void createPdfWithBackgroundColor(String name, String email) throws IOException, URISyntaxException {
+        // Create a new empty document
+        PDDocument document = new PDDocument();
+
+        // Create a new blank page and add it to the document
+        PDPage blankPage = new PDPage();
+        document.addPage( blankPage );
+        blankPage.setRotation(90);
+        float height = blankPage.getMediaBox().getHeight();
+        float width = blankPage.getMediaBox().getWidth();
+        System.out.println(height);
+        System.out.println(width);
+
+        PDImageXObject image = PDImageXObject.createFromFile("Protobot2.png", document);
+        image.setHeight(100);
+        image.setWidth(100);
+
+        PDFont boldFont = PDType1Font.HELVETICA_BOLD;
+        PDFont normalFont = PDType1Font.HELVETICA;
+
+        int fontSize = 16;
+        int marginTop = 30;
+
+        float titleWidth = boldFont.getStringWidth("PROTOBOT") / 1000 * fontSize;
+        float titleHeight = boldFont.getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * fontSize;
+
+        PDPageContentStream content = new PDPageContentStream(document, blankPage);
+
+        content.transform(Matrix.getRotateInstance(Math.toRadians(90),0,0));
+        content.beginText();
+        content.setFont(boldFont,26);
+        //content.newLineAtOffset((blankPage.getMediaBox().getWidth() - titleWidth) / 2, blankPage.getMediaBox().getHeight() - marginTop - titleHeight);
+        content.newLineAtOffset(310, -50);
+        content.showText("PROTOBOT");
+        content.newLine();
+        content.setFont(PDType1Font.HELVETICA,14);
+        content.newLineAtOffset(0, -30);
+        content.showText("Certifica que el estudiante");
+        content.newLine();
+        content.setFont(boldFont,30);
+        content.newLineAtOffset(0, -50);
+        content.showText(name);
+        content.newLine();
+        content.setFont(PDType1Font.HELVETICA,16);
+        content.newLineAtOffset(0, -50);
+        content.showText("Ha finalizado el curso de");
+        content.newLine();
+        content.newLineAtOffset(0, -50);
+        content.setFont(PDType1Font.HELVETICA,10);
+        content.showText(email);
+
+        content.endText();
+
+        content.drawImage(image, 355,-600);
+
+        content.close();
+
+        // Save the newly created document
+        document.save("13BlankPage.pdf");
 
         // finally make sure that the document is properly
         document.close();

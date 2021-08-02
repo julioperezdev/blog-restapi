@@ -45,4 +45,11 @@ class PdfMakerServiceImplementationTest {
     void createPageWithHorizontalImageAndText() throws IOException, URISyntaxException {
         service.createPdfWithHorizantalImageAndText();
     }
+
+    @Test
+    void createPageWithBackgroundColor() throws IOException, URISyntaxException {
+        String name = "Julio Ernesto Perez Viloria";
+        String email = "julio@email.com";
+        service.createPdfWithBackgroundColor(name, email);
+    }
 }
