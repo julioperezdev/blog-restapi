@@ -1,26 +1,30 @@
 package dev.protobot.blogrestapi.service.implementation;
 
+import dev.protobot.blogrestapi.model.Author;
+import dev.protobot.blogrestapi.repository.AuthorRepository;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.documentinterchange.taggedpdf.PDLayoutAttributeObject;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.graphics.color.PDGamma;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.util.Matrix;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.Optional;
 
 @Service
 public class PdfMakerServiceImplementation {
+
+
+    private final AuthorRepository authorRepository;
+
+    public PdfMakerServiceImplementation(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
+    }
 
     public void createPdf() throws IOException {
         // Create a new empty document
@@ -204,8 +208,9 @@ public class PdfMakerServiceImplementation {
         document.close();
     }
 
-    public void createPdfWithBackgroundColor(String name, String email) throws IOException, URISyntaxException {
+    public void createPdfWithBackgroundColor(Long id) throws IOException, URISyntaxException {
         // Create a new empty document
+        Optional<Author> authorById = authorRepository.getAuthorById(id);
         PDDocument document = new PDDocument();
 
         // Create a new blank page and add it to the document
@@ -245,7 +250,7 @@ public class PdfMakerServiceImplementation {
         content.newLine();
         content.setFont(boldFont,30);
         content.newLineAtOffset(0, -50);
-        content.showText(name);
+        content.showText(authorById.get().getFullName());
         content.newLine();
         content.setFont(PDType1Font.HELVETICA,16);
         content.newLineAtOffset(0, -50);
@@ -253,7 +258,7 @@ public class PdfMakerServiceImplementation {
         content.newLine();
         content.newLineAtOffset(0, -50);
         content.setFont(PDType1Font.HELVETICA,10);
-        content.showText(email);
+        content.showText(authorById.get().getEmail());
 
         content.endText();
 
@@ -262,7 +267,7 @@ public class PdfMakerServiceImplementation {
         content.close();
 
         // Save the newly created document
-        document.save("13BlankPage.pdf");
+        document.save("/home/protobot/14BlankPage.pdf");
 
         // finally make sure that the document is properly
         document.close();

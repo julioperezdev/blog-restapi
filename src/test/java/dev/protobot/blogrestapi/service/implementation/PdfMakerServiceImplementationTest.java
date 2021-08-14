@@ -48,8 +48,9 @@ class PdfMakerServiceImplementationTest {
 
     @Test
     void createPageWithBackgroundColor() throws IOException, URISyntaxException {
-        String name = "Julio Ernesto Perez Viloria";
-        String email = "julio@email.com";
-        service.createPdfWithBackgroundColor(name, email);
+        //String name = "Julio Ernesto Perez Viloria";
+        //String email = "julio@email.com";
+        Long id = 1L;
+        service.createPdfWithBackgroundColor(id);
     }
 }
